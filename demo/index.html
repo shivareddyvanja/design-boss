@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F3EFE6">
+  <title>Aether — Card Index</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="desktop-preview-mode">
+
+  <aside class="preview-bar" aria-label="Prototype preview controls">
+    <div class="preview-brand">
+      <span class="brand-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2v20M2 12h20M5.2 5.2l13.6 13.6M18.8 5.2 5.2 18.8"/></svg>
+      </span>
+      <span class="preview-brand-copy">
+        <strong>Aether</strong>
+        <span>Card Index · prototype</span>
+      </span>
+    </div>
+
+    <div class="preview-viewports" role="radiogroup" aria-label="Preview width">
+      <button class="preset-btn" data-width="375" aria-label="Preview at 375 pixels">375</button>
+      <button class="preset-btn active" data-width="393" aria-label="Preview at 393 pixels">393</button>
+      <button class="preset-btn" data-width="430" aria-label="Preview at 430 pixels">430</button>
+      <button class="preset-btn fluid-btn" data-width="fluid" aria-label="Fluid preview">Fluid</button>
+      <button class="preset-btn montage-btn" data-width="montage" aria-label="Compare all screens">Montage</button>
+    </div>
+
+    <div class="preview-tools">
+      <button class="preview-toggle" id="btn-desktop-a11y-toggle" aria-label="Toggle large text">
+        <span id="a11y-label">Large text</span>
+      </button>
+      <button class="preview-toggle" id="btn-desktop-theme-toggle" aria-label="Toggle theme">
+        <span id="desktop-theme-icon" aria-hidden="true">☾</span>
+        <span id="desktop-theme-text">Light</span>
+      </button>
+      <span class="preview-status"><span class="status-dot" aria-hidden="true"></span>AA text · 4.5:1</span>
+    </div>
+  </aside>
+
+  <div class="montage-wrapper hidden" id="montageWrapper" aria-label="All screens side by side">
+    <div class="montage-header">
+      <p class="eyebrow">Multi-screen review</p>
+      <h2>Four jobs, one system.</h2>
+      <p>Cards, rewards, bills, and activity at the same scale. Shared values stay aligned; each screen gets the structure its job needs.</p>
+    </div>
+    <div class="montage-columns" id="montageColumns"></div>
+  </div>
+
+  <div class="device-shell" id="deviceShell">
+
+    <header class="mobile-status-bar" aria-hidden="true">
+      <span class="status-time" id="liveTime">9:41</span>
+      <div class="dynamic-island"><span class="island-dot"></span></div>
+      <div class="status-glyphs">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M2 7h3v10H2zM7 4h3v13H7zM12 1h3v16h-3zM17 6h3v11h-3z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 19.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM6.3 14.1a8.1 8.1 0 0 1 11.4 0l-1.4 1.4a6.1 6.1 0 0 0-8.6 0zM3.5 11.3a12.1 12.1 0 0 1 17 0L19.1 12.7a10.1 10.1 0 0 0-14.2 0z"/></svg>
+        <span class="battery-pill"><span class="battery-fill"></span></span>
+      </div>
+    </header>
+
+    <main class="app-viewport" id="appViewport">
+
+      <!-- ============================================================ -->
+      <!-- 01 / CARDS                                                   -->
+      <!-- ============================================================ -->
+      <section class="tab-view active" id="view-wallet" role="region" aria-label="Card portfolio">
+
+        <header class="app-header">
+          <div class="brand-lockup">
+            <span class="wordmark">AETHER</span>
+            <span class="brand-rule" aria-hidden="true"></span>
+            <span class="brand-index">CARD INDEX</span>
+          </div>
+          <div class="header-actions">
+            <button class="icon-button" id="btn-app-theme-toggle" aria-label="Toggle light or dark theme">
+              <span id="app-theme-icon" aria-hidden="true">☾</span>
+            </button>
+            <button class="avatar-button" id="btn-quick-insights" aria-label="View portfolio health summary">SR</button>
+          </div>
+        </header>
+
+        <section class="portfolio-summary" aria-label="Portfolio summary">
+          <div class="portfolio-figure">
+            <span class="eyebrow">Total balance</span>
+            <p class="portfolio-headline"><span class="currency">$</span><span id="stat-total-balance">3,222.85</span></p>
+          </div>
+          <div class="utilization-block">
+            <div class="utilization-meta">
+              <span class="util-percent" id="total-util-percent">4.7% used</span>
+              <span class="util-limit">of $68,500</span>
+            </div>
+            <div class="meter-track" role="img" aria-label="Credit utilization">
+              <div class="meter-bar" id="util-bar-fill" style="width:4.7%"></div>
+            </div>
+            <p class="util-hint" id="util-hint-text">Excellent · under 30%</p>
+          </div>
+        </section>
+
+        <section class="next-move" id="urgentBillWidget" aria-label="Next payment action">
+          <div class="next-move-top">
+            <span class="status-tag" id="urgent-badge-text">Due in 4 days</span>
+            <button class="text-link" id="link-to-bills">All bills <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="next-move-body">
+            <div class="next-move-copy">
+              <span class="eyebrow">Next move</span>
+              <h2 id="urgent-bill-title">Amex Gold Reserve</h2>
+              <p id="urgent-bill-sub">Due Nov 4 · auto-pay scheduled</p>
+            </div>
+            <div class="next-move-action">
+              <span class="amount-figure" id="urgent-bill-amount">$842.10</span>
+              <button class="button button-primary" id="btn-quick-pay-urgent">Pay early</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">The deck</span>
+            <h2 class="section-title">Your cards <span class="count-note">(<span id="cards-count">4</span>)</span></h2>
+          </div>
+          <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Choose a card"></div>
+        </div>
+
+        <div class="card-carousel-container" id="cardsCarousel" tabindex="0" aria-label="Swipeable card deck">
+          <div class="card-track" id="cardTrack"></div>
+        </div>
+
+        <div class="card-action-strip" role="toolbar" aria-label="Card controls">
+          <button class="action-button" id="btn-flip-card" aria-label="Show card details">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="19" height="19" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+            <span id="flip-btn-text">Details</span>
+          </button>
+          <button class="action-button" id="btn-card-perks" aria-label="View card perks">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="19" height="19" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6-5.4-2.9-5.4 2.9 1-6L3.2 9.4l6.1-.9z"/></svg>
+            <span>Perks</span>
+          </button>
+          <button class="action-button" id="btn-card-freeze" aria-label="Lock or unlock this card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="19" height="19" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <span id="freeze-text">Freeze</span>
+          </button>
+        </div>
+
+        <div class="section-heading section-heading-tight">
+          <div>
+            <span class="eyebrow">Ledger</span>
+            <h2 class="section-title">Recent activity</h2>
+          </div>
+          <button class="text-link" id="link-to-activity">See all <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="transaction-list compact" id="compactTxList"></div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- 02 / SWIPE OPTIMIZER                                         -->
+      <!-- ============================================================ -->
+      <section class="tab-view" id="view-optimizer" role="region" aria-label="Rewards optimizer">
+
+        <header class="page-header">
+          <span class="eyebrow">Rewards · live</span>
+          <h1 class="page-title">Swipe this.</h1>
+          <p class="page-subtitle">One answer for the card in your hand. Ranked by real redemption value, not marketing multipliers.</p>
+        </header>
+
+        <div class="category-grid" role="tablist" aria-label="Spending category">
+          <button class="category-chip active" data-category="dining" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 3v8M10 3v8M7 11v10M17 3c-1.7 1.5-2.5 4-2.5 7 0 1.4.8 2 2 2h.5v9"/></svg>
+            <span>Dining</span>
+          </button>
+          <button class="category-chip" data-category="flights" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 15.5 21 8l-4.5-1.5-5 3-5-2L4 9l4 3-5 3.5z"/></svg>
+            <span>Flights</span>
+          </button>
+          <button class="category-chip" data-category="groceries" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.5 11h-11zM9 8a3 3 0 0 1 6 0"/></svg>
+            <span>Groceries</span>
+          </button>
+          <button class="category-chip" data-category="streaming" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="16" height="12" rx="2"/><path d="m10 9 4 2.5-4 2.5zM8 21h8"/></svg>
+            <span>Streaming</span>
+          </button>
+          <button class="category-chip" data-category="fuel" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 21V4h8v17M6 9h8M14 7h3l2 2v9a2 2 0 0 1-4 0V9M4 21h12"/></svg>
+            <span>Fuel</span>
+          </button>
+          <button class="category-chip" data-category="online" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16l-1.4 12H5.4zM8 7a4 4 0 0 1 8 0"/></svg>
+            <span>Online</span>
+          </button>
+        </div>
+
+        <section class="answer-panel" id="bestCardSpotlight" aria-live="polite">
+          <div class="answer-overline">
+            <span class="eyebrow">Top pick for <span id="compCategoryTitle">Dining</span></span>
+            <span class="answer-badge">Best value</span>
+          </div>
+          <div class="answer-stage">
+            <div class="answer-copy">
+              <div class="answer-multiplier" id="spotlight-multiplier">4× points</div>
+              <div class="answer-rate" id="spotlight-rate">8.0% back</div>
+            </div>
+            <div class="spotlight-card" id="spotlightCardVisual"></div>
+          </div>
+          <div class="answer-math">
+            <span class="eyebrow">The math</span>
+            <p id="spotlight-formula">4 pts/$1 × 2¢/pt = 8.0% return</p>
+          </div>
+          <p class="answer-note" id="spotlightExplanation">Use Amex Gold Reserve for restaurants worldwide.</p>
+        </section>
+
+        <section class="spend-calculator" aria-label="Spend calculator">
+          <div class="calculator-heading">
+            <label class="eyebrow" for="calc-spend-input">If you spend</label>
+            <div class="spend-field">
+              <span aria-hidden="true">$</span>
+              <input id="calc-spend-input" class="spend-input" type="number" value="120" min="1" step="5" inputmode="decimal" aria-label="Spend amount in dollars">
+            </div>
+          </div>
+          <div class="spend-presets" role="group" aria-label="Spend presets">
+            <button type="button" class="preset-chip" data-amount="50">$50</button>
+            <button type="button" class="preset-chip" data-amount="150">$150</button>
+            <button type="button" class="preset-chip" data-amount="400">$400</button>
+            <button type="button" class="preset-chip" data-amount="1200">$1,200</button>
+          </div>
+          <div class="calculator-results">
+            <div class="result-row result-row-best">
+              <span id="calc-best-card-label">Amex Gold Reserve</span>
+              <strong id="calc-best-val">480 pts · $9.60</strong>
+            </div>
+            <div class="result-row">
+              <span>Flat 1% card</span>
+              <strong id="calc-default-val">120 pts · $1.20</strong>
+            </div>
+          </div>
+          <p class="delta-line" id="calc-delta">You gain $8.40 by choosing the right card.</p>
+        </section>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">The lineup</span>
+            <h2 class="section-title">Every card, ranked</h2>
+          </div>
+          <span class="meta-note">4 cards</span>
+        </div>
+        <div class="ranking-list" id="categoryComparisonStack"></div>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Annual credits</span>
+            <h2 class="section-title">Perks worth using</h2>
+          </div>
+          <span class="meta-note" id="perks-active-count">3 active</span>
+        </div>
+        <div class="perks-list" id="perksList"></div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- 03 / BILLS                                                   -->
+      <!-- ============================================================ -->
+      <section class="tab-view" id="view-bills" role="region" aria-label="Bills and due dates">
+
+        <header class="page-header compact-header">
+          <span class="eyebrow">Statement schedule</span>
+          <h1 class="page-title">Due dates,<br>without the dread.</h1>
+          <p class="page-subtitle">What auto-pay covers, and what needs you.</p>
+        </header>
+
+        <section class="bill-summary" aria-label="Bills summary">
+          <div class="summary-stat">
+            <span class="eyebrow">Next 14 days</span>
+            <strong class="summary-figure" id="kpi-due-soon">$2,262.10</strong>
+            <span class="summary-note" id="kpi-due-count-badge">2 cards pending</span>
+          </div>
+          <div class="summary-divider" aria-hidden="true"></div>
+          <div class="summary-stat">
+            <span class="eyebrow">Auto-pay</span>
+            <strong class="summary-figure"><span id="kpi-autopay-count">3 of 4</span><span class="summary-figure-unit">cards</span></strong>
+            <span class="summary-note summary-note-good">Guard active</span>
+          </div>
+        </section>
+
+        <div class="timeline" id="billsTimelineList"></div>
+
+        <aside class="protection-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="21" height="21" aria-hidden="true"><path d="M12 3 4.5 6v6c0 5 3.2 8 7.5 9 4.3-1 7.5-4 7.5-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          <p><strong>Zero-interest grace period active.</strong> Paying early adjusts any scheduled auto-pay to $0.00, so you never pay twice.</p>
+        </aside>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- 04 / ACTIVITY                                                -->
+      <!-- ============================================================ -->
+      <section class="tab-view" id="view-activity" role="region" aria-label="Activity ledger">
+
+        <header class="page-header activity-header compact-header">
+          <div class="activity-head-row">
+            <span class="eyebrow">The ledger</span>
+            <div class="capture-actions">
+              <button class="capture-button capture-button-primary" id="btn-open-ai-parser" aria-label="Scan a message or receipt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18" aria-hidden="true"><path d="m12 3 1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"/></svg>
+                <span>Scan</span>
+              </button>
+              <button class="capture-button" id="btn-open-manual-entry" aria-label="Log a transaction manually">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                <span>Log</span>
+              </button>
+            </div>
+          </div>
+          <h1 class="page-title">Every charge,<br>one line.</h1>
+          <p class="page-subtitle">Charges, payments, and rewards in one record.</p>
+        </header>
+
+        <div class="filter-row" id="txFilterChips" role="radiogroup" aria-label="Filter transactions by card">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="amex">Amex</button>
+          <button class="filter-chip" data-filter="chase">Sapphire</button>
+          <button class="filter-chip" data-filter="apple">Apple</button>
+          <button class="filter-chip" data-filter="venture">Venture</button>
+        </div>
+
+        <div class="transaction-list full" id="fullTxList"></div>
+
+      </section>
+
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
+      <button class="nav-item active" data-target="view-wallet" aria-label="Card portfolio">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+        <span class="nav-label">Cards</span>
+      </button>
+      <button class="nav-item" data-target="view-optimizer" aria-label="Rewards optimizer">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 2.4 5.6L20 11l-5.6 2.4L12 19l-2.4-5.6L4 11l5.6-2.4z"/></svg>
+        <span class="nav-label">Swipe</span>
+      </button>
+      <button class="nav-item" data-target="view-bills" aria-label="Bills and due dates">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2v4M16 2v4M4 9h16M8 13h3"/></svg>
+        <span class="nav-label">Bills</span>
+        <span class="nav-badge-dot" id="nav-bills-dot" aria-label="Bill due soon"></span>
+      </button>
+      <button class="nav-item" data-target="view-activity" aria-label="Activity ledger">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 12h4l2.2-6 4 12L16 12h5"/></svg>
+        <span class="nav-label">Activity</span>
+      </button>
+    </nav>
+
+    <div class="home-indicator" aria-hidden="true"></div>
+
+    <!-- ============================================================ -->
+    <!-- CAPTURE SHEET                                                -->
+    <!-- ============================================================ -->
+    <div class="sheet-backdrop" id="txCaptureBackdrop" aria-hidden="true">
+      <div class="bottom-sheet" id="txCaptureSheet" role="dialog" aria-modal="true" aria-labelledby="txSheetTitle">
+        <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+
+        <div class="sheet-header sheet-header-stack">
+          <div class="sheet-heading-row">
+            <div>
+              <span class="eyebrow">New entry</span>
+              <h2 class="sheet-title" id="txSheetTitle">Capture a charge</h2>
+            </div>
+            <button class="sheet-close-btn" id="btn-close-sheet" aria-label="Close capture sheet">✕</button>
+          </div>
+          <div class="mode-switcher" role="tablist" aria-label="Capture method">
+            <button class="mode-tab active" id="tab-ai-mode" role="tab" aria-selected="true">Scan a message</button>
+            <button class="mode-tab" id="tab-manual-mode" role="tab" aria-selected="false">Enter manually</button>
+          </div>
+        </div>
+
+        <div class="sheet-body">
+          <div class="capture-mode-view active" id="mode-ai-view">
+            <p class="sheet-description">Paste a bank alert or receipt. Aether reads the merchant, amount, card, and reward.</p>
+
+            <div class="sample-list">
+              <span class="eyebrow">Try a sample</span>
+              <div class="sample-chips">
+                <button class="sample-chip" data-sample="Chase Alert: You made a $48.20 charge at Whole Foods Market with card ending 4092.">Whole Foods · $48.20</button>
+                <button class="sample-chip" data-sample="Amex Alert: Your card ending 1004 was charged $134.50 at Nobu Restaurant for Dining.">Nobu · $134.50</button>
+                <button class="sample-chip" data-sample="Delta Air Lines: Confirmed flight booking #DL891 charged $389.00 on Sapphire Reserve.">Delta · $389.00</button>
+                <button class="sample-chip sample-chip-error" data-sample="Your verification code is 849201. Do not share this code.">Invalid SMS · failure test</button>
+              </div>
+            </div>
+
+            <div class="ai-input-box">
+              <label class="sr-only" for="ai-text-input">Bank notification or receipt text</label>
+              <textarea id="ai-text-input" class="ai-textarea" rows="4" placeholder="e.g. Spent $32.40 at Starbucks on Amex Gold…"></textarea>
+              <button class="button button-primary button-wide" id="btn-run-ai-parse">
+                <span class="ai-pulse-dot" aria-hidden="true"></span>
+                <span id="ai-btn-text">Read the message</span>
+              </button>
+            </div>
+
+            <div class="notice notice-error hidden" id="aiErrorBanner" role="alert">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20" aria-hidden="true"><path d="M12 3 2.5 20h19z"/><path d="M12 9v5M12 17.5v.1"/></svg>
+              <div>
+                <strong>That doesn’t look like a purchase</strong>
+                <p id="aiErrorMsg">No amount or merchant was found. Try a bank purchase alert, or enter it yourself.</p>
+                <div class="notice-actions">
+                  <button type="button" class="text-button" id="btn-recovery-manual">Enter manually</button>
+                  <button type="button" class="text-button" id="btn-recovery-sample">Load a sample</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="parsed-preview hidden" id="aiParsedPreview">
+              <div class="parsed-head">
+                <span class="status-tag status-tag-good">Read complete</span>
+                <span class="meta-note">99.4% confidence</span>
+              </div>
+              <div class="parsed-card-match" id="parsedMatchCard"></div>
+              <div class="parsed-grid">
+                <div class="parsed-field">
+                  <span class="eyebrow">Merchant</span>
+                  <span id="parsed-merchant">Whole Foods</span>
+                </div>
+                <div class="parsed-field">
+                  <span class="eyebrow">Amount</span>
+                  <span id="parsed-amount">$48.20</span>
+                </div>
+                <div class="parsed-field">
+                  <span class="eyebrow">Category</span>
+                  <span id="parsed-category">Groceries</span>
+                </div>
+                <div class="parsed-field">
+                  <span class="eyebrow">Rewards</span>
+                  <span class="parsed-rewards" id="parsed-rewards">+192 pts</span>
+                </div>
+              </div>
+              <button class="button button-primary button-wide" id="btn-confirm-ai-tx">Add to ledger</button>
+            </div>
+          </div>
+
+          <div class="capture-mode-view" id="mode-manual-view">
+            <form id="manualTxForm" class="manual-form">
+              <div class="form-group">
+                <label for="manual-amount">Amount</label>
+                <div class="amount-field">
+                  <span aria-hidden="true">$</span>
+                  <input type="number" id="manual-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="manual-merchant">Merchant</label>
+                <input type="text" id="manual-merchant" class="text-input" placeholder="e.g. Trader Joe’s Wine & Spirits #402" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="manual-card-select">Card</label>
+                  <select id="manual-card-select" class="select-input">
+                    <option value="amex">Amex Gold · 1004</option>
+                    <option value="chase">Sapphire · 4092</option>
+                    <option value="apple">Apple Card · 8812</option>
+                    <option value="venture">Venture X · 5519</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="manual-category">Category</label>
+                  <select id="manual-category" class="select-input">
+                    <option value="Dining">Dining</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Online">Online</option>
+                    <option value="Streaming">Streaming</option>
+                    <option value="Fuel">Fuel</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="button button-primary button-wide">Save to ledger</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAYMENT SHEET                                                -->
+    <!-- ============================================================ -->
+    <div class="sheet-backdrop" id="billPayBackdrop" aria-hidden="true">
+      <div class="bottom-sheet" id="billPaySheet" role="dialog" aria-modal="true" aria-labelledby="billSheetTitle">
+        <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+        <div class="sheet-header">
+          <div>
+            <span class="eyebrow">Payment</span>
+            <h2 class="sheet-title" id="billSheetTitle">Review payment</h2>
+          </div>
+          <button class="sheet-close-btn" id="btn-close-pay-sheet" aria-label="Close payment sheet">✕</button>
+        </div>
+
+        <div class="sheet-body">
+          <div class="payment-summary">
+            <span class="pay-for-card" id="pay-card-name">Amex Gold Reserve</span>
+            <div class="pay-amount-display">
+              <span class="pay-currency" aria-hidden="true">$</span>
+              <span class="pay-number" id="pay-selected-amount">842.10</span>
+            </div>
+            <span class="pay-due-notice" id="pay-due-notice">Due in 4 days · no late fee</span>
+          </div>
+
+          <div class="notice notice-warning" id="autopayConflictNotice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/></svg>
+            <div>
+              <strong>Auto-pay already has this</strong>
+              <p id="autopayConflictMsg">Chase Checking ··8921 is scheduled for Nov 4. Paying now will adjust that auto-pay to $0.00 to prevent a double debit.</p>
+            </div>
+          </div>
+
+          <div class="payment-options" role="radiogroup" aria-label="Payment amount">
+            <label class="payment-option active">
+              <input type="radio" name="payAmountType" value="statement" checked>
+              <span class="payment-option-copy">
+                <span class="payment-option-title">Statement balance</span>
+                <span class="payment-option-desc">Keeps the grace period intact</span>
+              </span>
+              <span class="payment-option-amount" id="opt-statement-amt">$842.10</span>
+            </label>
+
+            <label class="payment-option">
+              <input type="radio" name="payAmountType" value="minimum">
+              <span class="payment-option-copy">
+                <span class="payment-option-title">Minimum due</span>
+                <span class="payment-option-desc">Keeps the account in good standing</span>
+              </span>
+              <span class="payment-option-amount" id="opt-min-amt">$35.00</span>
+            </label>
+          </div>
+
+          <div class="funding-row">
+            <span>From</span>
+            <strong>Chase Premier Checking ··8921</strong>
+            <span class="funding-balance">$6,420 available</span>
+          </div>
+
+          <label class="check-row">
+            <input type="checkbox" id="chk-simulate-pay-error">
+            <span>Simulate a bank network timeout</span>
+          </label>
+
+          <div class="notice notice-error hidden" id="payErrorBanner" role="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20" aria-hidden="true"><path d="M12 3 2.5 20h19z"/><path d="M12 9v5M12 17.5v.1"/></svg>
+            <div>
+              <strong>Bank did not respond</strong>
+              <p>Your account was not charged. Try again or choose another funding account.</p>
+            </div>
+          </div>
+
+          <button class="button button-primary button-wide button-pay" id="btn-execute-payment">
+            <span id="pay-button-label">Authorize payment · $842.10</span>
+          </button>
+          <p class="secure-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            Encrypted transfer. Cancel any time before it settles.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PERKS SHEET                                                  -->
+    <!-- ============================================================ -->
+    <div class="sheet-backdrop" id="cardPerksBackdrop" aria-hidden="true">
+      <div class="bottom-sheet" id="cardPerksSheet" role="dialog" aria-modal="true" aria-labelledby="cardPerksTitle">
+        <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+        <div class="sheet-header">
+          <div>
+            <span class="eyebrow">Benefits</span>
+            <h2 class="sheet-title" id="cardPerksTitle">Card perks</h2>
+          </div>
+          <button class="sheet-close-btn" id="btn-close-perks-sheet" aria-label="Close perks sheet">✕</button>
+        </div>
+        <div class="sheet-body" id="cardPerksBody"></div>
+      </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

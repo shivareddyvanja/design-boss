@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/mobile-design-craft/direction.schema.json",
+  "title": "Mobile Design Direction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "thesis",
+    "focalPoint",
+    "readingPath",
+    "composition",
+    "typography",
+    "colorAndSurfaces",
+    "signatureMoment",
+    "risk",
+    "fit"
+  ],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "thesis": { "type": "string", "minLength": 1 },
+    "focalPoint": { "type": "string", "minLength": 1 },
+    "readingPath": { "type": "string", "minLength": 1 },
+    "composition": { "type": "string", "minLength": 1 },
+    "typography": { "type": "string", "minLength": 1 },
+    "colorAndSurfaces": { "type": "string", "minLength": 1 },
+    "imagery": { "type": "string" },
+    "motion": { "type": "string" },
+    "signatureMoment": { "type": "string", "minLength": 1 },
+    "risk": { "type": "string", "minLength": 1 },
+    "fit": { "type": "string", "minLength": 1 },
+    "selected": { "type": "boolean" }
+  }
+}

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Mobile Design Craft"
+  short_description: "Design distinctive, production-ready mobile UI"
+  default_prompt: "Use $mobile-design-craft to design a distinctive mobile screen, render it, and refine it through visual critique."
+

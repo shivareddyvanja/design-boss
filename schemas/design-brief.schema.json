@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/mobile-design-craft/design-brief.schema.json",
+  "title": "Mobile Design Craft Brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mode",
+    "primaryJob",
+    "userContext",
+    "platforms",
+    "content",
+    "states",
+    "constraints"
+  ],
+  "properties": {
+    "mode": {
+      "enum": ["create", "extend", "redesign", "critique"]
+    },
+    "primaryJob": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userContext": {
+      "type": "string",
+      "minLength": 1
+    },
+    "emotionalTarget": {
+      "type": "string"
+    },
+    "platforms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["ios", "android", "cross-platform", "mobile-web"]
+      }
+    },
+    "outputSurface": {
+      "type": "string"
+    },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "priority", "example"],
+        "properties": {
+          "role": { "type": "string" },
+          "priority": { "enum": ["primary", "secondary", "supporting"] },
+          "example": { "type": "string" },
+          "variability": { "type": "string" }
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "existingSystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preserve": { "type": "array", "items": { "type": "string" } },
+        "flex": { "type": "array", "items": { "type": "string" } },
+        "avoid": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+

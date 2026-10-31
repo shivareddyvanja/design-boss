@@ -1,0 +1,194 @@
+[
+  {
+    "id": "regression-multiscreen-card-companion",
+    "category": "redesign",
+    "prompt": "Review and redesign the supplied demo of a mobile companion for managing multiple cards, rewards, bills, and transactions. Preserve its useful capabilities while giving each screen a composition suited to its job. Treat the supplied demo as an artifact to investigate, not as proof of backend behavior.",
+    "fixture": "demo/",
+    "target": "Comparable small and standard phone captures and cross-screen review",
+    "observableOutcomes": [
+      "Task-specific screen hierarchy and grouping materially improve relative to the baseline; added copy or functionality alone does not resolve this outcome",
+      "The most important task and action on each affected screen are apparent in comparable captures",
+      "Important action behavior is traced through the available prototype and unavailable integration behavior is marked unverified",
+      "Long content and revised UI do not introduce new clipping, obscured actions, or broken interaction states"
+    ],
+    "requiredStates": ["card-details", "reward-recommendation", "bill-due", "activity"],
+    "hardInvariants": [
+      "The persistent action has a clear, consistent purpose or is removed",
+      "Sensitive information exposure and its assumptions are identified",
+      "Scheduled and manual actions have clear behavior without invented guarantees",
+      "Reward value calculations are explained and checked against available inputs",
+      "Cross-screen values and states are consistent or marked unverified"
+    ],
+    "stress": "Long merchant name, large text, and a pending or failed action"
+  },
+  {
+    "id": "multiscreen-community-garden",
+    "category": "create",
+    "prompt": "Design a mobile app for a community garden: a shared plot overview, a watering schedule, and a harvest log. Volunteers need to see what needs attention today, understand who has taken responsibility, and record completed work. Make it feel rooted in the garden rather than a generic dashboard.",
+    "target": "Comparable 360x800 and 390x844 phone captures and cross-screen review",
+    "requiredStates": ["today", "task-claimed", "completed", "offline"],
+    "hardInvariants": [
+      "Each screen's composition supports its specific job while navigation stays coherent",
+      "Claimed and completed work remain consistent across screens",
+      "Any global action has one understandable purpose",
+      "Offline status does not imply a change was already synced"
+    ],
+    "stress": "Long plant names, a missed watering task, and an unsynced update"
+  },
+  {
+    "id": "dense-field-service-schedule",
+    "category": "create",
+    "prompt": "Design a phone screen for a field technician reviewing today's service visits. Show arrival windows, addresses, work type, urgency, and status. The screen must support quick scanning and a clear next action during a busy workday.",
+    "target": "360x800 mobile viewport",
+    "requiredStates": ["scheduled", "in-progress", "delayed", "offline"],
+    "hardInvariants": [
+      "Times, locations, and status are scannable without relying on color alone",
+      "The next visit and next action are clear",
+      "Dense information remains readable at large text",
+      "Stale offline information is labeled"
+    ],
+    "stress": "Eight visits with long addresses and an unexpected delay"
+  },
+  {
+    "id": "small-edit-existing-label",
+    "category": "small-edit",
+    "prompt": "In the supplied mobile demo, change the Flip Card button label to Flip card and ensure it still fits. Preserve the existing design system and behavior.",
+    "fixture": "demo/",
+    "target": "Existing card screen at its supported widths",
+    "requiredStates": ["ready"],
+    "hardInvariants": [
+      "Only the requested label and any necessary fit adjustment change",
+      "Existing behavior and styling remain intact",
+      "No concept exploration or unrelated redesign is required"
+    ],
+    "stress": "Narrow supported width and a larger text setting"
+  },
+  {
+    "id": "critique-existing-demo",
+    "category": "critique",
+    "prompt": "Review the supplied mobile demo for visual quality, cross-screen coherence, and clarity of its main actions. Provide prioritized, evidence-based recommendations; do not change the demo.",
+    "fixture": "demo/",
+    "target": "Principal screen captures and cross-screen review",
+    "requiredStates": ["card-details", "reward-recommendation", "bill-due", "activity"],
+    "hardInvariants": [
+      "The demo files remain unchanged",
+      "Feedback cites visible or inspected evidence and distinguishes assumptions from verified behavior",
+      "Cross-screen consistency and composition are assessed",
+      "Recommendations do not require a particular replacement style"
+    ],
+    "stress": "Compare screenshots with the actual interaction behavior where available"
+  },
+  {
+    "id": "greenfield-neighborhood-lending",
+    "category": "create",
+    "prompt": "Design the home screen for a mobile app where neighbors lend household tools to each other. The primary user is checking whether an item they requested is ready for pickup. Make the experience feel trustworthy and local without using a generic social feed.",
+    "target": "390x844 mobile viewport",
+    "requiredStates": ["ready", "request-pending", "empty", "offline"],
+    "hardInvariants": [
+      "Pickup status and next action are visible without searching",
+      "Borrowing and lending are distinguishable",
+      "Offline state does not imply live availability",
+      "No generic statistics dashboard"
+    ],
+    "stress": "Long item name: DeWalt 20V MAX cordless drill and 45-piece bit set"
+  },
+  {
+    "id": "greenfield-travel-disruption",
+    "category": "create",
+    "prompt": "Design a mobile screen for a rail travel app after the user's train is cancelled. They need to understand what happened and choose a replacement route while standing in a busy station. Create a confident, calm visual direction rather than an airline-style card template.",
+    "target": "360x800 mobile viewport",
+    "requiredStates": ["cancelled", "alternatives-loading", "alternatives-ready", "booking-failed"],
+    "hardInvariants": [
+      "Cancellation is unmistakable without relying on color alone",
+      "Best next route and departure time are quickly scannable",
+      "Failure preserves the user's selection",
+      "Targets support hurried one-handed use"
+    ],
+    "stress": "Station name: Birmingham New Street; replacement includes two changes"
+  },
+  {
+    "id": "greenfield-creator-audio-review",
+    "category": "create",
+    "prompt": "Design a mobile review screen for podcasters approving a short edited audio clip before publishing. The waveform and transcript are both important. It should feel editorial and creator-focused, not like a generic media player.",
+    "target": "393x852 mobile viewport",
+    "requiredStates": ["processing", "ready", "unsaved-edits", "publish-failed"],
+    "hardInvariants": [
+      "Audio position and corresponding transcript remain connected",
+      "Approve/publish is not confused with playback",
+      "Unsaved edits are recoverable",
+      "Transcript supports long spoken sentences"
+    ],
+    "stress": "Transcript at 200% text size"
+  },
+  {
+    "id": "redesign-wellness-checkin",
+    "category": "redesign",
+    "prompt": "Redesign a daily wellness check-in that currently consists of a greeting, three statistic cards, a mood emoji row, and a large gradient button. The actual job is to help a person notice a pattern and record today's energy in under 20 seconds. Keep it warm without becoming childish.",
+    "target": "375x812 mobile viewport",
+    "requiredStates": ["first-use", "pattern-visible", "saved", "save-failed"],
+    "hardInvariants": [
+      "Today's energy can be recorded quickly",
+      "The observed pattern is understandable but not presented as diagnosis",
+      "Save failure preserves the entry",
+      "The redesign is structurally different from stat cards"
+    ],
+    "stress": "Seven-day pattern contains two missing days"
+  },
+  {
+    "id": "extend-outdoor-checkout",
+    "category": "extend",
+    "prompt": "Add the final checkout review screen to an existing outdoor equipment rental app. Use the supplied tokens and components. The user must verify pickup location, rental dates, deposit, and weather-related cancellation terms before paying.",
+    "target": "390x844 mobile viewport",
+    "requiredStates": ["ready", "price-updated", "payment-processing", "payment-failed"],
+    "hardInvariants": [
+      "Provided components and tokens are reused when suitable",
+      "Deposit and total are not confused",
+      "Cancellation terms are visible before payment",
+      "Price changes require acknowledgment"
+    ],
+    "stress": "Localized German labels and a three-line pickup location"
+  },
+  {
+    "id": "extend-finance-transfer",
+    "category": "extend",
+    "prompt": "Add an international transfer confirmation screen to an existing finance app. It must fit the supplied design system while making exchange rate, fee, arrival estimate, recipient, and the irreversible confirmation clear.",
+    "target": "393x852 mobile viewport",
+    "requiredStates": ["rate-valid", "rate-expired", "submitting", "failed", "complete"],
+    "hardInvariants": [
+      "Amount sent and amount received cannot be confused",
+      "Expired rate blocks stale confirmation and offers recovery",
+      "Irreversible consequence is explicit",
+      "Meaning is not carried by color alone"
+    ],
+    "stress": "Recipient name and bank name each exceed 30 characters"
+  },
+  {
+    "id": "stress-rtl-grocery-substitution",
+    "category": "stress",
+    "prompt": "Design the Arabic RTL mobile screen where a grocery customer approves or rejects substitutions while a shopper is in the store. Multiple items may need a decision and time matters. Include mixed-direction brand names and prices.",
+    "target": "360x800 mobile viewport",
+    "requiredStates": ["decision-needed", "partially-decided", "timer-expired", "connection-lost"],
+    "hardInvariants": [
+      "RTL layout and directional icons are handled intentionally",
+      "Original and substitute items are easy to compare",
+      "Approve and reject are peer choices without accidental hierarchy",
+      "Connection loss does not discard decisions"
+    ],
+    "stress": "Mixed Arabic, Latin brand names, Western numerals, and long product titles"
+  },
+  {
+    "id": "stress-large-text-permission",
+    "category": "stress",
+    "prompt": "Design a mobile location-permission education screen for a city walking-safety app. Explain the difference between while-in-use and background location without coercion. The user can continue with reduced functionality. Test the design at 200% text size.",
+    "target": "320x700 mobile viewport at 200% text",
+    "requiredStates": ["not-requested", "while-in-use", "denied", "restricted"],
+    "hardInvariants": [
+      "Continue-without-background-location remains available",
+      "Consequences are factual and non-coercive",
+      "No required text or action is clipped at large text",
+      "System permission is requested only after education"
+    ],
+    "stress": "Small width, short height, and maximum supported text scaling"
+  }
+]
+
