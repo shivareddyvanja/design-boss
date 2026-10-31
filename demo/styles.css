@@ -2227,7 +2227,15 @@ body.theme-dark .button-primary:hover { background: #F27656; border-color: #F276
   transition: opacity var(--normal) var(--ease-out), visibility var(--normal);
 }
 
-.sheet-backdrop.active { opacity: 1; visibility: visible; }
+.sheet-backdrop:not(.active) {
+  display: none !important;
+}
+
+.sheet-backdrop.active {
+  display: flex !important;
+  opacity: 1;
+  visibility: visible;
+}
 
 .bottom-sheet {
   display: flex;
@@ -3022,6 +3030,16 @@ body.exact-mobile-frame .device-shell {
 body.is-capturing .preview-bar,
 body.is-capturing .toast-container,
 body.is-capturing .toast {
+  display: none !important;
+}
+
+/* html2canvas fix: eliminate inactive sheet backdrops from causing foggy overlay */
+body.is-capturing .sheet-backdrop:not(.active) {
+  display: none !important;
+}
+
+/* html2canvas fix: prevent repeating radial gradient noise from washing out card foil */
+body.is-capturing .card-face::before {
   display: none !important;
 }
 

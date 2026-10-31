@@ -1568,7 +1568,12 @@
           height: 844,
           windowWidth: 1200,
           windowHeight: 1000,
-          ignoreElements: (el) => el.classList && (el.classList.contains('toast-container') || el.classList.contains('toast'))
+          ignoreElements: (el) => {
+            if (!el || !el.classList) return false;
+            if (el.classList.contains('toast-container') || el.classList.contains('toast')) return true;
+            if (el.classList.contains('sheet-backdrop') && !el.classList.contains('active')) return true;
+            return false;
+          }
         });
         document.body.classList.remove('is-capturing');
 
@@ -1606,6 +1611,10 @@
         ctx.save();
         drawRoundRect(ctx, bezel, bezel, 393 * scale, 844 * scale, innerRadius);
         ctx.clip();
+        // Fill solid paper background first so titanium bezel color never bleeds through
+        ctx.fillStyle = isDark ? '#12110F' : '#F3EFE6';
+        ctx.fillRect(bezel, bezel, 393 * scale, 844 * scale);
+        // Draw captured screen
         ctx.drawImage(screenCanvas, 0, 0, 393 * scale, 844 * scale, bezel, bezel, 393 * scale, 844 * scale);
         ctx.restore();
 
