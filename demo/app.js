@@ -216,9 +216,6 @@
     appThemeIcon: document.getElementById('app-theme-icon'),
     btnQuickInsights: document.getElementById('btn-quick-insights'),
     btnDesktopCapture: document.getElementById('btn-desktop-capture'),
-    frameIsolateToolbar: document.getElementById('frameIsolateToolbar'),
-    btnDownloadFramePng: document.getElementById('btn-download-frame-png'),
-    btnExitIsolateFrame: document.getElementById('btn-exit-isolate-frame'),
 
     statTotalBalance: document.getElementById('stat-total-balance'),
     totalUtilPercent: document.getElementById('total-util-percent'),
@@ -1476,103 +1473,205 @@
       });
     });
 
-    // Frame isolation & snapshot mode
-    const toggleFrameIsolateMode = () => {
-      const isIsolated = document.body.classList.toggle('frame-isolate-mode');
-      if (isIsolated) {
-        showToast('Frame Isolated · Clean 393 × 844 iPhone mockup ready for screenshot', 'info');
+    // Helper to safely draw rounded rectangles on any canvas context
+    const drawRoundRect = (ctx, x, y, width, height, radius) => {
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(x, y, width, height, radius);
+      } else {
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
       }
+      ctx.closePath();
     };
 
-    const downloadFramePng = async () => {
-      const shell = document.getElementById('deviceShell');
+    // Automated 1-Click Frame Capture: renders exact 393px iPhone with titanium bezel, copies to clipboard & downloads
+    const captureAndDownloadFrame = async () => {
+      const shell = dom.deviceShell;
+      const btn = dom.btnDesktopCapture;
       if (!shell) return;
-      showToast('Generating high-res snapshot...', 'info');
+
+      // Provide feedback strictly on the desktop toolbar button — NEVER inside or over the phone screen
+      let labelSpan = null;
+      let origText = '';
+      if (btn) {
+        btn.disabled = true;
+        labelSpan = btn.querySelector('span:last-child');
+        if (labelSpan) {
+          origText = labelSpan.textContent;
+          labelSpan.textContent = 'Capturing...';
+        }
+      }
+
+      // Clear any existing toasts so the screen is completely clean
+      if (dom.toastContainer) {
+        dom.toastContainer.innerHTML = '';
+      }
+      document.body.classList.remove('frame-isolate-mode');
+
+      // If user was in montage mode, temporarily show device shell for capture
+      if (state.isMontageMode) {
+        state.isMontageMode = false;
+        dom.montageWrapper.classList.add('hidden');
+        dom.deviceShell.style.display = 'flex';
+        dom.presetBtns.forEach(b => b.classList.toggle('active', b.dataset.width === '393'));
+      }
+
+      // Ensure html2canvas is ready
+      if (typeof html2canvas === 'undefined') {
+        try {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        } catch (e) {
+          if (btn) {
+            btn.disabled = false;
+            if (labelSpan) labelSpan.textContent = origText;
+          }
+          showToast('Could not load html2canvas library', 'error');
+          return;
+        }
+      }
+
+      // Temporarily lock dimensions to exact 393 × 844 during rasterization
+      const prevWidth = shell.style.width;
+      const prevHeight = shell.style.height;
+      const prevMaxHeight = shell.style.maxHeight;
+      const prevTransform = shell.style.transform;
+
+      shell.style.width = '393px';
+      shell.style.height = '844px';
+      shell.style.maxHeight = '844px';
+      shell.style.transform = 'none';
 
       try {
-        const bezel = 11;
-        const w = 415;
-        const h = 866;
+        document.body.classList.add('is-capturing');
+        const isDark = document.body.classList.contains('theme-dark');
+        const screenCanvas = await html2canvas(shell, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: isDark ? '#12110F' : '#F3EFE6',
+          logging: false,
+          width: 393,
+          height: 844,
+          windowWidth: 1200,
+          windowHeight: 1000,
+          ignoreElements: (el) => el.classList && (el.classList.contains('toast-container') || el.classList.contains('toast'))
+        });
+        document.body.classList.remove('is-capturing');
+
+        // Restore dimensions immediately
+        shell.style.width = prevWidth;
+        shell.style.height = prevHeight;
+        shell.style.maxHeight = prevMaxHeight;
+        shell.style.transform = prevTransform;
+
+        // Composite onto high-res frame with 11px titanium bezel (415 × 866 at scale 2 = 830 × 1732)
         const scale = 2;
+        const totalW = 415 * scale;
+        const totalH = 866 * scale;
+        const bezel = 11 * scale;
+        const outerRadius = 54 * scale;
+        const innerRadius = 44 * scale;
 
-        const clone = shell.cloneNode(true);
-        clone.style.margin = `${bezel}px auto`;
-        clone.style.boxShadow = '0 0 0 10px #CDC6B8, 0 0 0 11px #B8AE9D';
-        clone.style.position = 'relative';
+        const finalCanvas = document.createElement('canvas');
+        finalCanvas.width = totalW;
+        finalCanvas.height = totalH;
+        const ctx = finalCanvas.getContext('2d');
 
-        let cssText = '';
-        for (const sheet of document.styleSheets) {
-          try {
-            for (const rule of sheet.cssRules) {
-              cssText += rule.cssText + '\n';
+        // Draw titanium outer rim (#B8AE9D light / #514A3C dark)
+        drawRoundRect(ctx, 0, 0, totalW, totalH, outerRadius);
+        ctx.fillStyle = isDark ? '#514A3C' : '#B8AE9D';
+        ctx.fill();
+
+        // Draw titanium main bezel body (#CDC6B8 light / #2A261F dark)
+        const rimOffset = 1 * scale;
+        drawRoundRect(ctx, rimOffset, rimOffset, totalW - rimOffset * 2, totalH - rimOffset * 2, outerRadius - rimOffset);
+        ctx.fillStyle = isDark ? '#2A261F' : '#CDC6B8';
+        ctx.fill();
+
+        // Clip and paint inner screen
+        ctx.save();
+        drawRoundRect(ctx, bezel, bezel, 393 * scale, 844 * scale, innerRadius);
+        ctx.clip();
+        ctx.drawImage(screenCanvas, 0, 0, 393 * scale, 844 * scale, bezel, bezel, 393 * scale, 844 * scale);
+        ctx.restore();
+
+        // Convert to PNG blob
+        finalCanvas.toBlob(async (blob) => {
+          if (btn) {
+            btn.disabled = false;
+            if (labelSpan) labelSpan.textContent = origText;
+          }
+
+          if (!blob) {
+            showToast('Failed to generate PNG blob', 'error');
+            return;
+          }
+
+          let copied = false;
+          // 1. Copy directly to system clipboard
+          if (navigator.clipboard && window.ClipboardItem) {
+            try {
+              await navigator.clipboard.write([
+                new ClipboardItem({ 'image/png': blob })
+              ]);
+              copied = true;
+            } catch (clipErr) {
+              console.warn('Clipboard write prevented by browser permissions:', clipErr);
             }
-          } catch (e) {}
-        }
+          }
 
-        const svgData = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="${w * scale}" height="${h * scale}" viewBox="0 0 ${w} ${h}">
-            <defs>
-              <style type="text/css">
-                ${cssText}
-                body { background: transparent !important; }
-              </style>
-            </defs>
-            <foreignObject width="${w}" height="${h}">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;justify-content:center;width:${w}px;height:${h}px;background:transparent;">
-                ${clone.outerHTML}
-              </div>
-            </foreignObject>
-          </svg>
-        `;
+          // 2. Automatically trigger file download
+          const tabName = state.activeTab.replace('view-', '');
+          const filename = `aether-${tabName}-iphone-393.png`;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
 
-        const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = w * scale;
-          canvas.height = h * scale;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          URL.revokeObjectURL(url);
+          if (copied) {
+            showToast(`📸 Copied to clipboard & saved as ${filename}!`, 'success');
+          } else {
+            showToast(`📸 Saved ${filename} to your Downloads folder!`, 'success');
+          }
+        }, 'image/png');
 
-          canvas.toBlob((pngBlob) => {
-            if (!pngBlob) {
-              showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
-              return;
-            }
-            const pngUrl = URL.createObjectURL(pngBlob);
-            const a = document.createElement('a');
-            a.download = `aether-${state.activeTab.replace('view-', '')}-iphone-393.png`;
-            a.href = pngUrl;
-            a.click();
-            URL.revokeObjectURL(pngUrl);
-            showToast('Downloaded iPhone frame PNG!', 'success');
-          }, 'image/png');
-        };
-        img.onerror = () => {
-          showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
-        };
-        img.src = url;
       } catch (err) {
-        showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
+        document.body.classList.remove('is-capturing');
+        // Restore styles and button on error
+        shell.style.width = prevWidth;
+        shell.style.height = prevHeight;
+        shell.style.maxHeight = prevMaxHeight;
+        shell.style.transform = prevTransform;
+        if (btn) {
+          btn.disabled = false;
+          if (labelSpan) labelSpan.textContent = origText;
+        }
+        console.error('Frame capture error:', err);
+        showToast('Snapshot failed: ' + (err.message || 'unknown error'), 'error');
       }
     };
 
     if (dom.btnDesktopCapture) {
-      dom.btnDesktopCapture.addEventListener('click', toggleFrameIsolateMode);
+      dom.btnDesktopCapture.addEventListener('click', captureAndDownloadFrame);
     }
-    if (dom.btnExitIsolateFrame) {
-      dom.btnExitIsolateFrame.addEventListener('click', toggleFrameIsolateMode);
-    }
-    if (dom.btnDownloadFramePng) {
-      dom.btnDownloadFramePng.addEventListener('click', downloadFramePng);
-    }
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.body.classList.contains('frame-isolate-mode')) {
-        toggleFrameIsolateMode();
-      }
-    });
 
     dom.btnQuickInsights.addEventListener('click', () => {
       const util = state.cards.reduce((sum, c) => sum + c.balance, 0) / state.cards.reduce((sum, c) => sum + c.limit, 0) * 100;

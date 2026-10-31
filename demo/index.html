@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body class="desktop-preview-mode">
 
@@ -39,20 +40,13 @@
         <span id="desktop-theme-icon" aria-hidden="true">☾</span>
         <span id="desktop-theme-text">Light</span>
       </button>
-      <button class="preview-toggle" id="btn-desktop-capture" aria-label="Capture exact iPhone frame">
+      <button class="preview-toggle" id="btn-desktop-capture" aria-label="Capture exact iPhone screenshot and copy to clipboard">
         <span aria-hidden="true">📸</span>
-        <span>Capture Frame</span>
+        <span>Copy & Download Screenshot</span>
       </button>
       <span class="preview-status"><span class="status-dot" aria-hidden="true"></span>AA text · 4.5:1</span>
     </div>
   </aside>
-
-  <!-- Floating Snapshot Mode Toolbar (Activated via Capture Frame button) -->
-  <div class="frame-isolate-toolbar" id="frameIsolateToolbar" role="toolbar" aria-label="Frame Snapshot Controls">
-    <span>📱 <strong>iPhone 16 Frame (393 × 844)</strong></span>
-    <button type="button" class="isolate-pill-btn" id="btn-download-frame-png">⬇ Download PNG</button>
-    <button type="button" class="isolate-pill-btn secondary" id="btn-exit-isolate-frame">✕ Exit</button>
-  </div>
 
   <div class="montage-wrapper hidden" id="montageWrapper" aria-label="All screens side by side">
     <div class="montage-header">
@@ -595,9 +589,9 @@
       </div>
     </div>
 
-    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
-
   </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="app.js"></script>
 </body>

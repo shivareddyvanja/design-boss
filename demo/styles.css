@@ -2717,11 +2717,11 @@ body.theme-dark .button-primary:hover { background: #F27656; border-color: #F276
 /* Toast */
 
 .toast-container {
-  position: absolute;
-  top: 56px;
-  right: 16px;
-  left: 16px;
-  z-index: 2000;
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2962,6 +2962,8 @@ body.phone-frame-only {
   overflow: hidden !important;
 }
 
+body.phone-frame-only .preview-bar,
+body.phone-frame-only .montage-wrapper,
 body.phone-frame-only .desktop-device-toolbar,
 body.phone-frame-only .montage-grid-wrapper {
   display: none !important;
@@ -2995,6 +2997,8 @@ body.exact-mobile-frame {
   justify-content: center !important;
 }
 
+body.exact-mobile-frame .preview-bar,
+body.exact-mobile-frame .montage-wrapper,
 body.exact-mobile-frame .desktop-device-toolbar,
 body.exact-mobile-frame .montage-grid-wrapper {
   display: none !important;
@@ -3013,8 +3017,26 @@ body.exact-mobile-frame .device-shell {
 
 
 /* ==========================================================================
-   INTERACTIVE FRAME ISOLATION & SNAPSHOT MODE
+   PIXEL-PERFECT FRAME CAPTURE MODIFIERS
    ========================================================================== */
+body.is-capturing .preview-bar,
+body.is-capturing .toast-container,
+body.is-capturing .toast {
+  display: none !important;
+}
+
+/* html2canvas 2D canvas fix: prevent 3D backface bleed-through */
+body.is-capturing .credit-card-wrapper:not(.flipped) .card-face.card-back {
+  display: none !important;
+}
+
+body.is-capturing .credit-card-wrapper.flipped .card-face.card-front {
+  display: none !important;
+}
+
+body.is-capturing .device-shell {
+  box-shadow: none !important;
+}
 .preview-toggle.capture-btn {
   background: var(--accent-soft);
   border-color: var(--accent);
