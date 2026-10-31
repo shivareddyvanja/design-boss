@@ -344,6 +344,9 @@
     // Check URL parameters or hash for direct tab / montage links
     const urlParams = new URLSearchParams(window.location.search);
     const hash = window.location.hash.replace('#', '');
+    if (urlParams.get('frame') === 'exact' || urlParams.get('frame') === 'only' || urlParams.get('frame') === '1' || hash === 'frame') {
+      document.body.classList.add('exact-mobile-frame');
+    }
     const tabParam = urlParams.get('tab') || (['wallet', 'optimizer', 'bills', 'activity'].includes(hash) ? hash : null);
     if (tabParam) {
       const targetView = tabParam.startsWith('view-') ? tabParam : `view-${tabParam}`;

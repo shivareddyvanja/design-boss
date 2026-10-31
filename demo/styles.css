@@ -2945,3 +2945,68 @@ body.accessibility-large-text .timeline::before { left: 24px; }
     transition-duration: 0.001ms !important;
   }
 }
+
+
+/* ==========================================================================
+   PHONE-FRAME-ONLY CAPTURE MODE (EXACT 393 DEVICE MOCKUP FRAME)
+   ========================================================================== */
+body.phone-frame-only {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+body.phone-frame-only .desktop-device-toolbar,
+body.phone-frame-only .montage-grid-wrapper {
+  display: none !important;
+}
+
+body.phone-frame-only .device-shell {
+  margin: 0 !important;
+  width: 393px !important;
+  height: 844px !important;
+  max-height: 844px !important;
+  border-radius: 48px !important;
+  box-shadow: 0 0 0 10px #CDC6B8, 0 0 0 11px #B8AE9D !important;
+  flex-shrink: 0 !important;
+}
+
+
+/* ==========================================================================
+   EXACT CSS MEASURES CAPTURE MODE (415px × 866px = 393px + 11px bezel each side)
+   ========================================================================== */
+body.exact-mobile-frame {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 415px !important;
+  height: 866px !important;
+  min-height: 866px !important;
+  max-height: 866px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+body.exact-mobile-frame .desktop-device-toolbar,
+body.exact-mobile-frame .montage-grid-wrapper {
+  display: none !important;
+}
+
+body.exact-mobile-frame .device-shell {
+  position: relative !important;
+  width: 393px !important;
+  height: 844px !important;
+  max-height: 844px !important;
+  border-radius: 46px !important;
+  box-shadow: 0 0 0 10px #CDC6B8, 0 0 0 11px #B8AE9D !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
