@@ -1492,39 +1492,11 @@
       ctx.closePath();
     };
 
-    // Automated 1-Click Frame Capture: renders exact 393px iPhone with titanium bezel, copies to clipboard & downloads
+    // Direct raw frame capture: renders exact same HTML without modifying DOM or triggering popups
     const captureAndDownloadFrame = async () => {
       const shell = dom.deviceShell;
-      const btn = dom.btnDesktopCapture;
       if (!shell) return;
 
-      // Provide feedback strictly on the desktop toolbar button — NEVER inside or over the phone screen
-      let labelSpan = null;
-      let origText = '';
-      if (btn) {
-        btn.disabled = true;
-        labelSpan = btn.querySelector('span:last-child');
-        if (labelSpan) {
-          origText = labelSpan.textContent;
-          labelSpan.textContent = 'Capturing...';
-        }
-      }
-
-      // Clear any existing toasts so the screen is completely clean
-      if (dom.toastContainer) {
-        dom.toastContainer.innerHTML = '';
-      }
-      document.body.classList.remove('frame-isolate-mode');
-
-      // If user was in montage mode, temporarily show device shell for capture
-      if (state.isMontageMode) {
-        state.isMontageMode = false;
-        dom.montageWrapper.classList.add('hidden');
-        dom.deviceShell.style.display = 'flex';
-        dom.presetBtns.forEach(b => b.classList.toggle('active', b.dataset.width === '393'));
-      }
-
-      // Ensure html2canvas is ready
       if (typeof html2canvas === 'undefined') {
         try {
           await new Promise((resolve, reject) => {
@@ -1535,115 +1507,33 @@
             document.head.appendChild(s);
           });
         } catch (e) {
-          if (btn) {
-            btn.disabled = false;
-            if (labelSpan) labelSpan.textContent = origText;
-          }
-          showToast('Could not load html2canvas library', 'error');
           return;
         }
       }
 
-      // Temporarily lock dimensions to exact 393 × 844 during rasterization
-      const prevWidth = shell.style.width;
-      const prevHeight = shell.style.height;
-      const prevMaxHeight = shell.style.maxHeight;
-      const prevTransform = shell.style.transform;
-
-      shell.style.width = '393px';
-      shell.style.height = '844px';
-      shell.style.maxHeight = '844px';
-      shell.style.transform = 'none';
-
       try {
-        document.body.classList.add('is-capturing');
         const isDark = document.body.classList.contains('theme-dark');
-        const screenCanvas = await html2canvas(shell, {
+        const canvas = await html2canvas(shell, {
           scale: 2,
           useCORS: true,
           allowTaint: true,
           backgroundColor: isDark ? '#12110F' : '#F3EFE6',
-          logging: false,
-          width: 393,
-          height: 844,
-          windowWidth: 1200,
-          windowHeight: 1000,
-          ignoreElements: (el) => {
-            if (!el || !el.classList) return false;
-            if (el.classList.contains('toast-container') || el.classList.contains('toast')) return true;
-            if (el.classList.contains('sheet-backdrop') && !el.classList.contains('active')) return true;
-            return false;
-          }
+          logging: false
         });
-        document.body.classList.remove('is-capturing');
 
-        // Restore dimensions immediately
-        shell.style.width = prevWidth;
-        shell.style.height = prevHeight;
-        shell.style.maxHeight = prevMaxHeight;
-        shell.style.transform = prevTransform;
+        canvas.toBlob(async (blob) => {
+          if (!blob) return;
 
-        // Composite onto high-res frame with 11px titanium bezel (415 × 866 at scale 2 = 830 × 1732)
-        const scale = 2;
-        const totalW = 415 * scale;
-        const totalH = 866 * scale;
-        const bezel = 11 * scale;
-        const outerRadius = 54 * scale;
-        const innerRadius = 44 * scale;
-
-        const finalCanvas = document.createElement('canvas');
-        finalCanvas.width = totalW;
-        finalCanvas.height = totalH;
-        const ctx = finalCanvas.getContext('2d');
-
-        // Draw titanium outer rim (#B8AE9D light / #514A3C dark)
-        drawRoundRect(ctx, 0, 0, totalW, totalH, outerRadius);
-        ctx.fillStyle = isDark ? '#514A3C' : '#B8AE9D';
-        ctx.fill();
-
-        // Draw titanium main bezel body (#CDC6B8 light / #2A261F dark)
-        const rimOffset = 1 * scale;
-        drawRoundRect(ctx, rimOffset, rimOffset, totalW - rimOffset * 2, totalH - rimOffset * 2, outerRadius - rimOffset);
-        ctx.fillStyle = isDark ? '#2A261F' : '#CDC6B8';
-        ctx.fill();
-
-        // Clip and paint inner screen
-        ctx.save();
-        drawRoundRect(ctx, bezel, bezel, 393 * scale, 844 * scale, innerRadius);
-        ctx.clip();
-        // Fill solid paper background first so titanium bezel color never bleeds through
-        ctx.fillStyle = isDark ? '#12110F' : '#F3EFE6';
-        ctx.fillRect(bezel, bezel, 393 * scale, 844 * scale);
-        // Draw captured screen
-        ctx.drawImage(screenCanvas, 0, 0, 393 * scale, 844 * scale, bezel, bezel, 393 * scale, 844 * scale);
-        ctx.restore();
-
-        // Convert to PNG blob
-        finalCanvas.toBlob(async (blob) => {
-          if (btn) {
-            btn.disabled = false;
-            if (labelSpan) labelSpan.textContent = origText;
-          }
-
-          if (!blob) {
-            showToast('Failed to generate PNG blob', 'error');
-            return;
-          }
-
-          let copied = false;
-          // 1. Copy directly to system clipboard
+          // Silently attach to clipboard
           if (navigator.clipboard && window.ClipboardItem) {
             try {
               await navigator.clipboard.write([
                 new ClipboardItem({ 'image/png': blob })
               ]);
-              copied = true;
-            } catch (clipErr) {
-              console.warn('Clipboard write prevented by browser permissions:', clipErr);
-            }
+            } catch (e) {}
           }
 
-          // 2. Automatically trigger file download
+          // Directly download the exact image
           const tabName = state.activeTab.replace('view-', '');
           const filename = `aether-${tabName}-iphone-393.png`;
           const url = URL.createObjectURL(blob);
@@ -1653,28 +1543,10 @@
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
-          setTimeout(() => URL.revokeObjectURL(url), 1500);
-
-          if (copied) {
-            showToast(`📸 Copied to clipboard & saved as ${filename}!`, 'success');
-          } else {
-            showToast(`📸 Saved ${filename} to your Downloads folder!`, 'success');
-          }
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
         }, 'image/png');
-
       } catch (err) {
-        document.body.classList.remove('is-capturing');
-        // Restore styles and button on error
-        shell.style.width = prevWidth;
-        shell.style.height = prevHeight;
-        shell.style.maxHeight = prevMaxHeight;
-        shell.style.transform = prevTransform;
-        if (btn) {
-          btn.disabled = false;
-          if (labelSpan) labelSpan.textContent = origText;
-        }
         console.error('Frame capture error:', err);
-        showToast('Snapshot failed: ' + (err.message || 'unknown error'), 'error');
       }
     };
 
