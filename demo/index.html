@@ -39,9 +39,20 @@
         <span id="desktop-theme-icon" aria-hidden="true">☾</span>
         <span id="desktop-theme-text">Light</span>
       </button>
+      <button class="preview-toggle" id="btn-desktop-capture" aria-label="Capture exact iPhone frame">
+        <span aria-hidden="true">📸</span>
+        <span>Capture Frame</span>
+      </button>
       <span class="preview-status"><span class="status-dot" aria-hidden="true"></span>AA text · 4.5:1</span>
     </div>
   </aside>
+
+  <!-- Floating Snapshot Mode Toolbar (Activated via Capture Frame button) -->
+  <div class="frame-isolate-toolbar" id="frameIsolateToolbar" role="toolbar" aria-label="Frame Snapshot Controls">
+    <span>📱 <strong>iPhone 16 Frame (393 × 844)</strong></span>
+    <button type="button" class="isolate-pill-btn" id="btn-download-frame-png">⬇ Download PNG</button>
+    <button type="button" class="isolate-pill-btn secondary" id="btn-exit-isolate-frame">✕ Exit</button>
+  </div>
 
   <div class="montage-wrapper hidden" id="montageWrapper" aria-label="All screens side by side">
     <div class="montage-header">

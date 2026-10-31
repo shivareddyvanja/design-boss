@@ -215,6 +215,10 @@
     btnAppThemeToggle: document.getElementById('btn-app-theme-toggle'),
     appThemeIcon: document.getElementById('app-theme-icon'),
     btnQuickInsights: document.getElementById('btn-quick-insights'),
+    btnDesktopCapture: document.getElementById('btn-desktop-capture'),
+    frameIsolateToolbar: document.getElementById('frameIsolateToolbar'),
+    btnDownloadFramePng: document.getElementById('btn-download-frame-png'),
+    btnExitIsolateFrame: document.getElementById('btn-exit-isolate-frame'),
 
     statTotalBalance: document.getElementById('stat-total-balance'),
     totalUtilPercent: document.getElementById('total-util-percent'),
@@ -1470,6 +1474,104 @@
           }
         }
       });
+    });
+
+    // Frame isolation & snapshot mode
+    const toggleFrameIsolateMode = () => {
+      const isIsolated = document.body.classList.toggle('frame-isolate-mode');
+      if (isIsolated) {
+        showToast('Frame Isolated · Clean 393 × 844 iPhone mockup ready for screenshot', 'info');
+      }
+    };
+
+    const downloadFramePng = async () => {
+      const shell = document.getElementById('deviceShell');
+      if (!shell) return;
+      showToast('Generating high-res snapshot...', 'info');
+
+      try {
+        const bezel = 11;
+        const w = 415;
+        const h = 866;
+        const scale = 2;
+
+        const clone = shell.cloneNode(true);
+        clone.style.margin = `${bezel}px auto`;
+        clone.style.boxShadow = '0 0 0 10px #CDC6B8, 0 0 0 11px #B8AE9D';
+        clone.style.position = 'relative';
+
+        let cssText = '';
+        for (const sheet of document.styleSheets) {
+          try {
+            for (const rule of sheet.cssRules) {
+              cssText += rule.cssText + '\n';
+            }
+          } catch (e) {}
+        }
+
+        const svgData = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="${w * scale}" height="${h * scale}" viewBox="0 0 ${w} ${h}">
+            <defs>
+              <style type="text/css">
+                ${cssText}
+                body { background: transparent !important; }
+              </style>
+            </defs>
+            <foreignObject width="${w}" height="${h}">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;justify-content:center;width:${w}px;height:${h}px;background:transparent;">
+                ${clone.outerHTML}
+              </div>
+            </foreignObject>
+          </svg>
+        `;
+
+        const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = w * scale;
+          canvas.height = h * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          URL.revokeObjectURL(url);
+
+          canvas.toBlob((pngBlob) => {
+            if (!pngBlob) {
+              showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
+              return;
+            }
+            const pngUrl = URL.createObjectURL(pngBlob);
+            const a = document.createElement('a');
+            a.download = `aether-${state.activeTab.replace('view-', '')}-iphone-393.png`;
+            a.href = pngUrl;
+            a.click();
+            URL.revokeObjectURL(pngUrl);
+            showToast('Downloaded iPhone frame PNG!', 'success');
+          }, 'image/png');
+        };
+        img.onerror = () => {
+          showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
+        };
+        img.src = url;
+      } catch (err) {
+        showToast('Snapshot ready on screen · Press Cmd+Shift+4', 'info');
+      }
+    };
+
+    if (dom.btnDesktopCapture) {
+      dom.btnDesktopCapture.addEventListener('click', toggleFrameIsolateMode);
+    }
+    if (dom.btnExitIsolateFrame) {
+      dom.btnExitIsolateFrame.addEventListener('click', toggleFrameIsolateMode);
+    }
+    if (dom.btnDownloadFramePng) {
+      dom.btnDownloadFramePng.addEventListener('click', downloadFramePng);
+    }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('frame-isolate-mode')) {
+        toggleFrameIsolateMode();
+      }
     });
 
     dom.btnQuickInsights.addEventListener('click', () => {

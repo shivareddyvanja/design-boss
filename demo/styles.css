@@ -3010,3 +3010,111 @@ body.exact-mobile-frame .device-shell {
   margin: 0 !important;
   flex-shrink: 0 !important;
 }
+
+
+/* ==========================================================================
+   INTERACTIVE FRAME ISOLATION & SNAPSHOT MODE
+   ========================================================================== */
+.preview-toggle.capture-btn {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+body.frame-isolate-mode {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #E8E3D8 !important;
+  overflow: hidden !important;
+}
+
+body.theme-dark.frame-isolate-mode {
+  background: #0E0D0A !important;
+}
+
+body.frame-isolate-mode .preview-bar,
+body.frame-isolate-mode .montage-wrapper {
+  display: none !important;
+}
+
+body.frame-isolate-mode .device-shell {
+  position: relative !important;
+  width: 393px !important;
+  height: 844px !important;
+  max-height: 844px !important;
+  border-radius: 46px !important;
+  box-shadow: 0 0 0 10px #CDC6B8, 0 0 0 11px #B8AE9D !important;
+  margin: auto !important;
+  flex-shrink: 0 !important;
+}
+
+.frame-isolate-toolbar {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 21, 17, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #171511;
+  animation: slideDownToast 0.25s ease;
+}
+
+body.theme-dark .frame-isolate-toolbar {
+  background: rgba(26, 24, 20, 0.96);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #FAF8F5;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+}
+
+body.frame-isolate-mode .frame-isolate-toolbar {
+  display: flex !important;
+}
+
+.isolate-pill-btn {
+  background: #171511;
+  color: #FFFFFF;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.isolate-pill-btn:hover {
+  background: #000000;
+  transform: translateY(-1px);
+}
+
+.isolate-pill-btn.secondary {
+  background: rgba(23, 21, 17, 0.08);
+  color: #171511;
+}
+
+body.theme-dark .isolate-pill-btn.secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: #FAF8F5;
+}
