@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/mobile-design-craft/direction.schema.json",
-  "title": "Mobile Design Direction",
+  "$id": "https://example.org/design-boss/direction.schema.json",
+  "title": "Design Boss Direction",
   "type": "object",
   "additionalProperties": false,
   "required": [

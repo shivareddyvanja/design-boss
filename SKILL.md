@@ -1,12 +1,12 @@
 ---
-name: mobile-design-craft
+name: design-boss
 description: Design, redesign, critique, or implement distinctive mobile screens and flows for iOS, Android, and cross-platform apps. Use for new mobile UI, extending an existing app, turning requirements into polished screens, improving generic-looking interfaces, or visually reviewing mobile implementations. Produces context-specific art direction, mobile interaction states, and rendered visual QA when tools permit. Do not use for desktop-only or general web design.
 license: MIT
 metadata:
   version: "0.5.2"
 ---
 
-# Mobile Design Craft
+# Design Boss
 
 Design mobile interfaces with a specific point of view, credible product behavior, and production-aware details. The result should fit the user, task, content, and product—not a house style or a template.
 

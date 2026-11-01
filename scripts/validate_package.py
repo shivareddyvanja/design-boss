@@ -132,7 +132,7 @@ def main() -> int:
             print(f"FAIL {failure}")
         return 1
 
-    print(f"PASS mobile-design-craft package at {root}")
+    print(f"PASS design-boss package at {root}")
     return 0
 
 

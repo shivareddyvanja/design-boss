@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/mobile-design-craft/design-brief.schema.json",
-  "title": "Mobile Design Craft Brief",
+  "$id": "https://example.org/design-boss/design-brief.schema.json",
+  "title": "Design Boss Brief",
   "type": "object",
   "additionalProperties": false,
   "required": [

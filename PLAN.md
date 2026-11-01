@@ -6,7 +6,7 @@ Build a new, agent-agnostic skill rather than adopting one existing skill unchan
 
 Use the open Agent Skills format as the portable shell, borrow proven ideas from existing projects, and keep rendering integrations optional. The skill's core job is not to operate Figma or emit Flutter; it is to make better design decisions and verify the visual result. Editors and frameworks are adapters.
 
-Working name: `mobile-design-craft`.
+Working name: `design-boss`.
 
 ### Why this direction
 

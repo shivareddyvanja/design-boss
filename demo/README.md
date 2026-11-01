@@ -1,8 +1,8 @@
-# Aether Wallet — Mobile Design Craft Demo (v0.4 — Card Index)
+# Aether Wallet — Design Boss Demo (v0.4 — Card Index)
 
-A production-grade mobile prototype demonstrating the **`mobile-design-craft`** Agent Skill in action. It models a multi-card financial companion managing credit cards, rewards optimization, billing schedules, and transaction capture.
+A production-grade mobile prototype demonstrating the **`design-boss`** Agent Skill in action. It models a multi-card financial companion managing credit cards, rewards optimization, billing schedules, and transaction capture.
 
-The demo was completely rebuilt following the **`mobile-design-craft`** workflow, addressing all anti-template flags, product-logic invariants, accessibility stress requirements, and multi-screen review standards.
+The demo was completely rebuilt following the **`design-boss`** workflow, addressing all anti-template flags, product-logic invariants, accessibility stress requirements, and multi-screen review standards.
 
 ---
 

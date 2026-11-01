@@ -1,4 +1,4 @@
-# Mobile Design Craft Router
+# Design Boss Router
 
 Use this router with [SKILL.md](SKILL.md). Classify the task and follow the applicable stages. Load a linked module or section when the decision arises; reuse already-read guidance. If an agent cannot read sections selectively, read the linked file. Revisit earlier stages when review reveals a specific defect, not as a fixed repeated sequence.
 
